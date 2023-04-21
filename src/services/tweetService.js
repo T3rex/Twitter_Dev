@@ -11,7 +11,8 @@ class TweetService{
             const content = data.content;
             const tweet = await this.tweetRepo.create(data);            
             let tags = content.match(/#[a-zA-Z0-9_]+/g);
-            tags = tags.map( tag => tag.substring(1).toLowerCase());   
+            tags = tags.map( tag => tag.substring(1).toLowerCase());  
+            console.log(tags); 
             let presentTags =  await this.hashtagRepo.searchAllTags(tags);  
             let titleOfPresentTags= presentTags.map(tag => tag.title);
             let newTags =  tags.filter(tag => !titleOfPresentTags.includes(tag));
