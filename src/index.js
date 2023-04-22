@@ -21,11 +21,4 @@ app.listen(3001,async() => {
     await connect();
     console.log('Mongo db connected');    
 
-/*     const user = await userRepo.create({
-        email: 'abc@123.com',
-        password : 'abc123',
-        name : 'Te3ex'
-    }); */
-    
-    await likeService.toggleLike('64427730b9a8afd1d762b636','Tweet','64426edb230a0aa8f67431d8');
 })

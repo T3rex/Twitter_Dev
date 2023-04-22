@@ -13,7 +13,13 @@ const userSchema =  new mongoose.Schema({
     name:{
         type: String,        
         required: true
-    }
+    },
+    likes :[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'likes'
+        }
+    ]
 },{timestamps:true});
 
 
