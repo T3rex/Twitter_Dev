@@ -11,8 +11,7 @@ class TweetService{
             const content = data.content;
             const tweet = await this.tweetRepo.create(data);            
             let tags = content.match(/#[a-zA-Z0-9_]+/g);
-            tags = tags.map( tag => tag.substring(1).toLowerCase());  
-            console.log(tags); 
+            tags = tags.map( tag => tag.substring(1).toLowerCase());            
             let presentTags =  await this.hashtagRepo.searchAllTags(tags);  
             let titleOfPresentTags= presentTags.map(tag => tag.title);
             let newTags =  tags.filter(tag => !titleOfPresentTags.includes(tag));
@@ -33,6 +32,16 @@ class TweetService{
     async updateTweetTag(tweetId,data){
         try {
             const response = await this.tweetRepo.update(tweetId,data);
+            return response;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+
+    async getTweet(tweetId){
+        try {
+            const response = await this.tweetRepo.get(tweetId);
             return response;
         } catch (error) {
             console.log(error);

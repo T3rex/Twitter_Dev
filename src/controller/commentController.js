@@ -1,13 +1,13 @@
-const {UserService} = require('../services/index');
+const {CommentService} = require('../services/index');
 
-const userService = new UserService();
+const commentService = new CommentService();
 
-const signup = async(req,res) =>{
+const createComment = async(req,res) =>{
     try {        
-        const response  = await userService.signup(req.body);
+        const response  = await commentService.createComment(req.body);
         return res.status(200).json({
             data: response,
-            message :  'User created successfully',
+            message :  'Comment added successfully',
             success: true,
             err : {}
         });
@@ -22,16 +22,17 @@ const signup = async(req,res) =>{
     }
 }
 
-const login = async(req,res) =>{
-    try {    
-        const response = await userService.getUserByEmail(req.body);   
+const getMoreComments = async (req, res) =>{    
+    try {        
+        const response  = await commentService.getMoreNestedComments(req.params.id);
         return res.status(200).json({
-            token: response,
+            data: response,
+            message :  'Comment successfully fetched',
             success: true,
-            message : 'User logged in successfully',
             err : {}
         });
-    } catch (error) {       
+    } catch (error) {
+        console.log(error);
         return res.status(500).json({
             data:{},
             message : "Something went wrong",
@@ -41,7 +42,7 @@ const login = async(req,res) =>{
     }
 }
 
-
 module.exports = {
-   signup,login
+    createComment,
+    getMoreComments
 }

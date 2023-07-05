@@ -1,46 +1,21 @@
 const Comment = require('../models/comments');
+const CrudRepository = require('./crudRepository');
+class CommentRepository  extends CrudRepository{
 
-class CommentRepository {
-    async create(data){
+    constructor(){
+        super(Comment);
+    } 
+
+    async getMoreNestedComments(commentId){
         try {
-            const tweet = await Comment.create(data);
-            return tweet;
+            const comments = await Comment.findById(commentId).populate({path: 'comments'});
+            return comments;
         } catch (error) {
             console.log(error);
-            throw error;
+            throw error``
         }
-    }
 
-    async get(tweetId){
-        try {
-            const tweet = await Comment.findById(tweetId);
-            return tweet;
-        } catch (error) {
-            console.log(error);
-            throw error;
-        }
     }
-
-    async update(tweetId, data){
-        try {
-            const tweet = await Comment.findByIdAndUpdate(tweetId,data,{new:true});
-            return tweet;
-        } catch (error) {
-            console.log(error);
-            throw error;
-        }
-    }
-
-    async destroy(tweetId){
-        try {
-            const tweet = await Comment.findByIdAndDelete(tweetId);
-            return tweet;
-        } catch (error) {
-            console.log(error);
-            throw error;
-        }
-    }
-
 }
 
 module.exports = CommentRepository;
